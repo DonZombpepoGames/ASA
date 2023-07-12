@@ -1,0 +1,57 @@
+//--------------Sonic CD Apple TV Icons Script----------------//
+//--------Scripted by Christian Whitehead 'The Taxman'--------//
+//-------Unpacked By Rubberduckycooly's Script Unpacker-------//
+//-----Used on iOS version of the game, Origins leftover------//
+
+
+event ObjectDraw
+	object.scale = 256
+
+	switch object.propertyValue
+	case 0
+		object.rotation = 0
+		break
+	case 1
+		object.rotation = 384
+		break
+	case 2
+		object.rotation = 0
+		break
+	end switch
+
+	DrawSpriteFX(object.propertyValue, FX_ROTOZOOM, object.xpos, object.ypos)
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("Menu/MetalSonic.gif")
+
+	SpriteFrame(-32, -105, 64, 210, 1, 257) // #0 - Apple TV Controller
+	SpriteFrame(-32, -105, 64, 210, 1, 257) // #1 - Apple TV Controller (duplicate)
+	SpriteFrame(-93, -70, 186, 142, 68, 369) // #2 - Apple TV Game Controller
+end event
+
+
+// ========================
+// Editor Subs
+// ========================
+
+event RSDKDraw
+	object.scale = 256
+
+	CheckEqual(object.propertyValue, 1)
+	object.rotation = checkResult
+	object.rotation *= 384
+	DrawSpriteFX(object.propertyValue, FX_ROTOZOOM, object.xpos, object.ypos)
+end event
+
+
+event RSDKLoad
+	LoadSpriteSheet("Menu/MetalSonic.gif")
+	SpriteFrame(-32, -105, 64, 210, 1, 257) // #0 - Apple TV Controller
+	SpriteFrame(-32, -105, 64, 210, 1, 257) // #1 - Apple TV Controller (duplicate)
+	SpriteFrame(-93, -70, 186, 142, 68, 369) // #2 - Apple TV Game Controller
+
+
+end event
+

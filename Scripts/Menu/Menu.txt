@@ -1,0 +1,67 @@
+// ----------------------------------
+// RSDK Project: Project Virtua
+// Script Description: Stage Menu Object
+
+// ========================
+// Aliases
+// ========================
+
+private alias object.value0 : object.timer
+private alias object.value3 : object.selectedIcon
+private alias object.value4 : object.zoneTimer
+
+private alias 0 : STAGEMENU_SETUP
+private alias 1 : STAGEMENU_UNUSED1
+private alias 2 : STAGEMENU_UNUSED2
+private alias 3 : STAGEMENU_SELECTING
+private alias 4 : STAGEMENU_EXITZONES
+private alias 5 : STAGEMENU_SHOWZONENAME
+private alias 6 : STAGEMENU_FADETOSTAGE
+private alias 7 : STAGEMENU_FADETOMENU
+
+// ZoneButton Aliases
+private alias object.value1 : zoneButton.zoneDetailsWidth
+private alias object.value2 : zoneButton.disabled
+
+// 2PVSSetup Aliases
+private alias object.value0		: 2PVSSetup.timer
+private alias object.state		: 2PVSSetup.state
+private alias object.priority	: 2PVSSetup.priority
+
+// 2PVSSetup States
+private alias 1 : 2PVSSETUP_FADEIN
+
+
+// ========================
+// Events
+// ========================
+
+event ObjectUpdate
+
+//event ObjectStartup
+	SetMusicTrack("MainMenu.ogg", 0, false)
+// Setup menu 1 (left column)
+	SetupMenu(MENU_1, 0, 3, 1)
+
+	// Add the entries
+	AddMenuEntry(MENU_1, "YOKOSO NETWORK@ 1", true)
+	AddMenuEntry(MENU_1, "2", false)
+	AddMenuEntry(MENU_1, " ", false)
+	AddMenuEntry(MENU_1, "CYBER CITY@@ 1", true)
+	AddMenuEntry(MENU_1, "2", false)
+	AddMenuEntry(MENU_1, " ", false)
+	AddMenuEntry(MENU_1, "AQUATIC RUIN@@ 1", true)
+	AddMenuEntry(MENU_1, "2", false)
+	AddMenuEntry(MENU_1, " ", false)
+	AddMenuEntry(MENU_1, "CASINO NIGHT@@ 1", true)
+	AddMenuEntry(MENU_1, "2", false)
+	AddMenuEntry(MENU_1, " ", false)
+	AddMenuEntry(MENU_1, "HILL TOP@@@@@@ 1", true)
+	AddMenuEntry(MENU_1, "2", false)
+	AddMenuEntry(MENU_1, " ", false)
+	AddMenuEntry(MENU_1, "MYSTIC CAVE@@@ 1", true)
+	AddMenuEntry(MENU_1, "2", false)
+	AddMenuEntry(MENU_1, " ", false)
+	AddMenuEntry(MENU_1, "OIL OCEAN@@@@@ 1", true)
+	AddMenuEntry(MENU_1, "2", false)
+	AddMenuEntry(MENU_1, " ", false)

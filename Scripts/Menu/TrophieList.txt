@@ -1,0 +1,169 @@
+//----------------Sonic CD Trophie List Script----------------//
+//--------Scripted by Christian Whitehead 'The Taxman'--------//
+//-------Unpacked By Rubberduckycooly's Script Unpacker-------//
+//---This Object is normally only used by WP7 Data files------//
+
+// Aliases
+private alias object.value1 : Object.AchievementUnlocked //[[Actually i have no clue about this one]]
+private alias object.value2 : Object.TrophieSheet
+private alias object.value3 : Object.HelpTextSheet
+
+private alias object[0].value2 : TrophiesMenu.SelectionPos
+
+// Priority
+private alias 1 : PRIORITY_ACTIVE
+
+// Online Menus
+private alias 0 : ONLINEMENU_ACHIEVEMENTS
+
+
+event ObjectDraw
+	object.ypos = object.propertyValue
+	object.ypos *= 0x300000
+	object.ypos -= TrophiesMenu.SelectionPos
+	object.ypos += 0x480000
+	object.scale = 128
+
+	object.spriteSheet = Object.TrophieSheet
+	if Object.AchievementUnlocked == true
+		DrawSpriteFX(object.frame, FX_SCALE, object.xpos, object.ypos)
+	else
+		DrawSpriteFX(12, FX_SCALE, object.xpos, object.ypos)
+	end if
+
+	temp0 = object.xpos
+	temp0 >>= 16
+	temp0 -= screen.xoffset
+	temp0 += 20
+
+	temp1 = object.ypos
+	temp1 >>= 16
+	temp1 -= screen.yoffset
+	temp1 -= 13
+
+	temp2 = object.propertyValue
+	temp2 <<= 1
+
+	object.spriteSheet = Object.HelpTextSheet
+
+// WARNING: Function FUNC_DRAWTEXT does not exist in RSDKv4!
+// Arguments: MENU_2, temp0, temp1, 128, 41, temp2, 1
+
+	temp1 += 15
+	temp2++
+// WARNING: Function FUNC_DRAWTEXT does not exist in RSDKv4!
+// Arguments: MENU_2, temp0, temp1, 92, 41, temp2, 1
+
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("Menu/Trophies.gif")
+	temp0 = object.spriteSheet
+	LoadSpriteSheet("Menu/HelpText.gif")
+	temp1 = object.spriteSheet
+
+	SpriteFrame(-64, -64, 128, 128, 0, 0) // #0  - 88 Miles Per Hour Icon
+	SpriteFrame(-64, -64, 128, 128, 128, 0) // #1  - One Hug is Enough Icon
+	SpriteFrame(-64, -64, 128, 128, 256, 0) // #2  - Paradise Found Icon
+	SpriteFrame(-64, -64, 128, 128, 384, 0) // #3  - Take the High Road Icon
+	SpriteFrame(-64, -64, 128, 128, 0, 128) // #4  - King of the Rings Icon
+	SpriteFrame(-64, -64, 128, 128, 128, 128) // #5  - Statue Saviour Icon
+	SpriteFrame(-64, -64, 128, 128, 256, 128) // #6  - Heavy Metal Icon
+	SpriteFrame(-64, -64, 128, 128, 384, 128) // #7  - All Stages Clear! Icon
+	SpriteFrame(-64, -64, 128, 128, 0, 256) // #8  - Treasure Hunter Icon
+	SpriteFrame(-64, -64, 128, 128, 128, 256) // #9  - Dr. Eggman Got Served Icon
+	SpriteFrame(-64, -64, 128, 128, 256, 256) // #10 - Just In Time! Icon
+	SpriteFrame(-64, -64, 128, 128, 384, 256) // #11 - Saviour of the Planet Icon
+	SpriteFrame(-64, -64, 128, 128, 0, 384) // #12 - Lock Icon
+
+	SetupMenu(MENU_2, 0, 3, 1)
+
+	AddMenuEntry(MENU_2, "88MilesPerHour", 0)
+	AddMenuEntry(MENU_2, "Travelthroughtime.", 0)
+
+	AddMenuEntry(MENU_2, "JustOneHugisEnough", 0)
+	AddMenuEntry(MENU_2, "GetahugfromAmy.", 0)
+
+	AddMenuEntry(MENU_2, "ParadiseFound", 0)
+	AddMenuEntry(MENU_2, "CompleteaZoneintheGoodFuture.", 0)
+
+	AddMenuEntry(MENU_2, "TaketheHighRoad", 0)
+	AddMenuEntry(MENU_2, "PasstheuppersignpostinCollisionChaosZone2.", 0)
+
+	AddMenuEntry(MENU_2, "KingoftheRings", 0)
+	AddMenuEntry(MENU_2, "Collect200Rings.", 0)
+
+	AddMenuEntry(MENU_2, "StatueSaviour", 0)
+	AddMenuEntry(MENU_2, "FindtheangelstatueinWackyWorkbench.", 0)
+
+	AddMenuEntry(MENU_2, "HeavyMetal", 0)
+	AddMenuEntry(MENU_2, "DefeatMetalSonicwithoutgettinghurt.", 0)
+
+	AddMenuEntry(MENU_2, "AllStagesClear!", 0)
+	AddMenuEntry(MENU_2, "Finishthegame.", 0)
+
+	AddMenuEntry(MENU_2, "TreasureHunter", 0)
+	AddMenuEntry(MENU_2, "CollectalltheTimeStones.", 0)
+
+	AddMenuEntry(MENU_2, "Dr.EggmanGotServed", 0)
+	AddMenuEntry(MENU_2, "DestroyDr.Eggman'sfinalmachine.", 0)
+
+	AddMenuEntry(MENU_2, "JustInTime!", 0)
+	AddMenuEntry(MENU_2, "CompletetheTimeAttackmodeinunder25minutes.", 0)
+
+	AddMenuEntry(MENU_2, "SaviourofthePlanet", 0)
+	AddMenuEntry(MENU_2, "DestroyalltherobottransportersandMetalSonichologramsinthepast.", 0)
+
+// WARNING: Function FUNC_LOADONLINEMENU does not exist in RSDKv4!
+// Arguments: ONLINEMENU_ACHIEVEMENTS
+
+
+	// Used to be below LoadSpriteSheet, moved here for consistency
+	arrayPos0 = 32
+	while arrayPos0 < 1056
+		if object[arrayPos0].type == TypeName[Trophie List]
+			Object.TrophieSheet[arrayPos0] = temp0
+			Object.HelpTextSheet[arrayPos0] = temp1
+			object[arrayPos0].drawOrder = 2
+			object[arrayPos0].priority = PRIORITY_ACTIVE
+			if screen.xsize >= 384
+				object[arrayPos0].xpos -= 0x100000
+			end if
+		end if
+		arrayPos0++
+	loop
+end event
+
+
+// ========================
+// Editor Subs
+// ========================
+
+event RSDKDraw
+	object.scale = 128
+	temp0 = object.entityPos
+	temp0--
+	DrawSpriteFX(temp0, FX_SCALE, object.xpos, object.ypos)
+end event
+
+
+event RSDKLoad
+	LoadSpriteSheet("Menu/Trophies.gif")
+
+	SpriteFrame(-64, -64, 128, 128, 0, 0) // #0  - 88 Miles Per Hour Icon
+	SpriteFrame(-64, -64, 128, 128, 128, 0) // #1  - One Hug is Enough Icon
+	SpriteFrame(-64, -64, 128, 128, 256, 0) // #2  - Paradise Found Icon
+	SpriteFrame(-64, -64, 128, 128, 384, 0) // #3  - Take the High Road Icon
+	SpriteFrame(-64, -64, 128, 128, 0, 128) // #4  - King of the Rings Icon
+	SpriteFrame(-64, -64, 128, 128, 128, 128) // #5  - Statue Saviour Icon
+	SpriteFrame(-64, -64, 128, 128, 256, 128) // #6  - Heavy Metal Icon
+	SpriteFrame(-64, -64, 128, 128, 384, 128) // #7  - All Stages Clear! Icon
+	SpriteFrame(-64, -64, 128, 128, 0, 256) // #8  - Treasure Hunter Icon
+	SpriteFrame(-64, -64, 128, 128, 128, 256) // #9  - Dr. Eggman Got Served Icon
+	SpriteFrame(-64, -64, 128, 128, 256, 256) // #10 - Just In Time! Icon
+	SpriteFrame(-64, -64, 128, 128, 384, 256) // #11 - Saviour of the Planet Icon
+	SpriteFrame(-64, -64, 128, 128, 0, 384) // #12 - Lock Icon
+
+
+end event

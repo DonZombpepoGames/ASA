@@ -1,0 +1,102 @@
+//-----------------Sonic CD Exit Button Script----------------//
+//--------Scripted by Christian Whitehead 'The Taxman'--------//
+//-------Unpacked By Rubberduckycooly's Script Unpacker-------//
+//-----This Object is normally only used by WP7 Data files----//
+
+// Aliases
+private alias object.value1 : Object.InputCheck
+
+//Object[0] is Trophies Menu
+private alias object[0].state : ThropiesMenu.State
+
+// Thropies Menu States
+private alias 2 : TROPHIES_CONTROLS
+private alias 5 : TROPHIES_EXIT
+
+// Global SFX
+private alias 26 : SFX_G_OUTTAHERE
+
+//Engine & CallBacks
+private alias 2 : MESSAGE_LOSTFOCUS
+
+
+event ObjectUpdate
+	if ThropiesMenu.State == TROPHIES_CONTROLS
+// WARNING: Variable VAR_ENGINEMESSAGE does not exist in RSDKv4!
+		if Engine.Message == MESSAGE_LOSTFOCUS
+			Object.InputCheck = 0
+		end if
+		temp0 = object.xpos
+		temp0 >>= 16
+		temp1 = temp0
+		temp0 -= 18
+		temp0 -= screen.xoffset
+		temp1 += 18
+		temp1 -= screen.xoffset
+		CheckTouchRect(temp0, 0, temp1, 48)
+		if checkResult > -1
+			Object.InputCheck = true
+		else
+			CheckTouchRect(0, 0, screen.xsize, screen.ysize)
+			if checkResult < 0
+				if Object.InputCheck == true
+					Object.InputCheck = false
+					PlaySfx(SFX_G_OUTTAHERE, false)
+					StopMusic()
+					ThropiesMenu.State = TROPHIES_EXIT
+				end if
+			else
+				Object.InputCheck = false
+			end if
+		end if
+	end if
+end event
+
+
+event ObjectDraw
+	object.scale = 128
+	if Object.InputCheck == true
+		DrawSpriteFX(1, FX_SCALE, object.xpos, object.ypos)
+	else
+		DrawSpriteFX(0, FX_SCALE, object.xpos, object.ypos)
+	end if
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("Menu/Trophies.gif")
+
+	SpriteFrame(-63, -39, 126, 78, 129, 385) //#0 - Back Button
+	SpriteFrame(-60, -37, 120, 74, 260, 387) //#1 - Pressed Back Button
+
+	temp0 = screen.xcenter
+	temp0 -= 160
+	temp0 <<= 16
+
+	arrayPos0 = 32
+	while arrayPos0 < 1056
+		if object[arrayPos0].type == TypeName[Exit Button]
+			object[arrayPos0].xpos += temp0
+		end if
+		arrayPos0++
+	loop
+end event
+
+
+// ========================
+// Editor Subs
+// ========================
+
+event RSDKDraw
+	object.scale = 128
+	DrawSpriteFX(0, FX_SCALE, object.xpos, object.ypos)
+end event
+
+
+event RSDKLoad
+	LoadSpriteSheet("Menu/Trophies.gif")
+
+	SpriteFrame(-63, -39, 126, 78, 129, 385) //#0 - Back Button
+
+
+end event
